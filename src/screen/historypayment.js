@@ -15,11 +15,10 @@ export default class PaymentHistoryScreen extends Component {
 
         user = require("../icons/userfb.jpg");
         lend = require("../icons/baseline_lens_black_18dp.png");
-        menu = require("../icons/baseline_menu_white_18dp.png");
-        search = require("../icons/baseline_search_white_18dp.png");
+        search = require("../icons/search.png");
         tailieunho = require("../icons/if_book_edit_35733.png");
         canhannho = require("../icons/if_system-users_15357.png");
-        back = require("../icons/baseline_keyboard_arrow_left_white_18dp.png");
+        back = require("../icons/back.png");
 
         data=[];
 
@@ -71,9 +70,9 @@ export default class PaymentHistoryScreen extends Component {
     _renderViewToolBar() {
         return (
             <View style={{ flex: 1, backgroundColor: "#2196F3", flexDirection: "row", alignItems: "center", justifyContent: "center", height: verticalScale(50) }}>
-                <TouchableHighlight onPress={this._onPressBack.bind(this)} style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
+                <TouchableOpacity onPress={this._onPressBack.bind(this)} style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
                     <Image style={{ resizeMode: "contain", height: verticalScale(30), width: "100%" }} source={back} />
-                </TouchableHighlight>
+                </TouchableOpacity>
 
                 <Text
                     style={{
@@ -87,9 +86,9 @@ export default class PaymentHistoryScreen extends Component {
                     LỊCH SỬ NẠP TIỀN{" "}
                 </Text>
 
-                <TouchableHighlight onPress={this._onPressSearch.bind(this)} style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
+                <TouchableOpacity onPress={this._onPressSearch.bind(this)} style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
                     <Image style={{ resizeMode: "contain", height:verticalScale(30) , width: "100%" }} source={search} />
-                </TouchableHighlight>
+                </TouchableOpacity>
             </View>
         );
     }

@@ -1,4 +1,4 @@
-import { StyleSheet, View, Text, ListView, Image, DrawerLayoutAndroid, TouchableHighlight } from 'react-native';
+import { StyleSheet, View, Text, ListView, Image, DrawerLayoutAndroid, TouchableHighlight, TouchableOpacity } from 'react-native';
 import React, { Component } from 'react';
 import { PagerTabIndicator, IndicatorViewPager, PagerTitleIndicator, PagerDotIndicator } from 'rn-viewpager';
 import styles from "../style/styles";
@@ -10,9 +10,9 @@ export default class DocumentDetailScreen extends Component {
     constructor(props){
         super(props);
 
-        search = require("../icons/baseline_search_white_18dp.png");
-        back = require("../icons/baseline_keyboard_arrow_left_white_18dp.png");
-        key = require("../icons/baseline_vpn_key_white_18dp.png");
+        search = require("../icons/search.png");
+        back = require("../icons/back.png");
+        key = require("../icons/answer.png");
         data = [];
         
         this.state={
@@ -30,7 +30,7 @@ export default class DocumentDetailScreen extends Component {
                     // RNProgressHUB.dismiss();
                     data = resdata.data.lstDoc;
                     for (dataID of data) {
-                        if (dataID.ID === this.props.navigation.getParam('calldoc')) {
+                        if (dataID.ID === this.props.navigation.getParam('calldoc').id) {
                             this.setState({
                                dataObj:dataID
                             });
@@ -58,9 +58,9 @@ export default class DocumentDetailScreen extends Component {
     _renderViewToolBar() {
         return (
             <View style={{ flex: 1, backgroundColor: "#2196F3", flexDirection: "row", alignItems: "center", justifyContent: "center", height: verticalScale(50) }}>
-                <TouchableHighlight onPress={this._onPressBack.bind(this)} style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
+                <TouchableOpacity onPress={this._onPressBack.bind(this)} style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
                     <Image style={{ resizeMode: "contain", height: verticalScale(30), width: "100%" }} source={back} />
-                </TouchableHighlight>
+                </TouchableOpacity>
 
                 <Text
                     style={{
@@ -71,13 +71,13 @@ export default class DocumentDetailScreen extends Component {
                     }}
                 >
                     {" "}
-
+                    {this.props.navigation.getParam('calldoc').title}
                     {" "}
                 </Text>
 
-                <TouchableHighlight onPress={() => this.props.navigation.navigate("Answer", { calldocid: this.state.dataObj.ID })} style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
+                <TouchableOpacity onPress={() => this.props.navigation.navigate("Answer", { calldocid: this.state.dataObj.ID })} style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
                     <Image style={{ resizeMode: "contain", height: verticalScale(30), width: "100%" }} source={key} />
-                </TouchableHighlight>
+                </TouchableOpacity>
             </View>
         );
     }

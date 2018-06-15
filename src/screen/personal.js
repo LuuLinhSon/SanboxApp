@@ -18,8 +18,8 @@ export default class PersonalScreen extends Component {
 
         user = require("../icons/userfb.jpg");
         lend = require("../icons/baseline_lens_black_18dp.png");
-        menu = require("../icons/baseline_menu_white_18dp.png");
-        search = require("../icons/baseline_search_white_18dp.png");
+        menu = require("../icons/menu.png");
+        search = require("../icons/search.png");
         tailieunho = require("../icons/if_book_edit_35733.png");
         canhannho = require("../icons/if_system-users_15357.png");
 
@@ -34,6 +34,18 @@ export default class PersonalScreen extends Component {
             token:""
         }
 
+    }
+
+    componentWillMount(){
+        // if(global.isLogin === false){
+        //     const { navigate } = this.props.navigation;
+        //     let key = ["User", "UserUpdate", "Token", "Status", "Fullname", "Vip"];
+        //     AsyncStorage.multiRemove(key);
+        //     navigate("Auth");
+        //     global.isLogin = false;
+        //     global.fullname = "";
+        //     global.vip = false;
+        // }
     }
 
     componentDidMount() {
@@ -52,11 +64,12 @@ export default class PersonalScreen extends Component {
                                 "phone":data.data.Phone,
                                 "address":data.data.Address,
                                 "isLoading":false,
-                                "vip": data.data.vip,
+                                // "vip": data.data.vip,
                                 "token": data.token,
                             });
                             console.log("Lấy token trong Personal : " + data.token);
                             AsyncStorage.setItem("Token", data.token);
+                            global.token = data.token;
                         });
                     
                 } else {
@@ -67,7 +80,7 @@ export default class PersonalScreen extends Component {
                             this.setState({
                                 "username": data.data.UserName,
                                 "fullname": data.data.CustName,
-                                "vip": data.data.vip,
+                                // "vip": data.data.vip,
                                 "email": data.data.Email,
                                 "phone": data.data.Phone,
                                 "address": data.data.Address,
@@ -92,9 +105,9 @@ export default class PersonalScreen extends Component {
     _renderViewToolBar() {
         return (
             <View onPress={this._onPressMenu.bind(this)} style={{ flex: 1, backgroundColor: "#2196F3", flexDirection: "row", alignItems: "center", justifyContent: "center", height: verticalScale(50) }}>
-                <TouchableHighlight onPress={this._onPressMenu.bind(this)} style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
+                <TouchableOpacity onPress={this._onPressMenu.bind(this)} style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
                     <Image style={{ resizeMode: "contain", height: verticalScale(30), width: "100%" }} source={menu} />
-                </TouchableHighlight>
+                </TouchableOpacity>
 
                 <Text
                     style={{
@@ -108,9 +121,9 @@ export default class PersonalScreen extends Component {
                     CÁ NHÂN{" "}
                 </Text>
 
-                <TouchableHighlight onPress={this._onPressSearch.bind(this)} style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
+                <TouchableOpacity onPress={this._onPressSearch.bind(this)} style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
                     <Image style={{ resizeMode: "contain", height: verticalScale(30), width: "100%" }} source={search} />
-                </TouchableHighlight>
+                </TouchableOpacity>
             </View>
         );
     }
@@ -181,35 +194,7 @@ export default class PersonalScreen extends Component {
                         </View>
                         </TouchableOpacity>
                     );
-            }
-
-            // return(
-            // <View onPress={this._onPressHeader.bind(this)} style={{ flexDirection: "row", flex: 1, width: "100%", backgroundColor: "#CCC", justifyContent: "center", alignItems: "center" }}>
-            //     <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-            //         <Image style={{ resizeMode: "contain", height: verticalScale(50), borderRadius: 30 }} source={user} />
-            //     </View>
-
-            //     <View style={{ flex: 3 }}>
-            //         <View style={{ flex: 1, justifyContent: "flex-end", alignSelf: "flex-start", marginBottom: 3 }}>
-            //             <Text style={{ fontSize: 15, color: "#2196F3" }}>
-            //             {this.state.username} - {this.state.fullname}
-            //             </Text>
-            //         </View>
-
-            //         <View style={{ flex: 1, backgroundColor: "#CCC", flexDirection: "row", justifyContent: "flex-start", alignSelf: "flex-start", marginTop: verticalScale(3) }}>
-            //             <Text
-            //                 style={{
-
-            //                     color: "#000",
-            //                     fontSize: moderateScale(15),
-            //                     textAlign: "center"
-            //                 }}
-            //             >
-            //                 Trang cá nhân của bạn
-            //             </Text>
-            //         </View>
-            //     </View>
-            // </View>);
+                }
         
     }
 
@@ -273,7 +258,7 @@ export default class PersonalScreen extends Component {
 
     _onPressSignOut(){
         const { navigate } = this.props.navigation;
-        let key = ["User", "UserUpdate", "Token","Status","Fullname"];
+        let key = ["User", "UserUpdate", "Token","Status","Fullname","Vip"];
         AsyncStorage.multiRemove(key);
         navigate("Auth");
         global.isLogin = false;

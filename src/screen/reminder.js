@@ -5,7 +5,8 @@ import {
   Text,
   TextInput,
   TouchableHighlight,
-  ScrollView
+  ScrollView,
+  TouchableOpacity
 } from "react-native";
 import styles from '../style/styles';
 import { textInputUserName, textInputPassword,textInputEmail } from '../multiscreen/renderComponentOS';
@@ -23,8 +24,8 @@ export default class ReminderScreen extends Component {
         clean = require("../icons/baseline_clear_black_18dp.png");
         tailieunho = require("../icons/if_book_edit_35733.png");
         canhannho = require("../icons/if_system-users_15357.png");
-        back = require("../icons/baseline_keyboard_arrow_left_white_18dp.png");
-        search = require("../icons/baseline_search_white_18dp.png");
+        back = require("../icons/back.png");
+        search = require("../icons/search.png");
         this.state = {
             username: "",
             email: "",
@@ -37,9 +38,9 @@ export default class ReminderScreen extends Component {
         return <View style={{flex:1,backgroundColor:"#FFF"}}>
 
             <View style={{flex:1, backgroundColor: "#2196F3", flexDirection: "row", alignItems: "center", justifyContent: "center", height: verticalScale(50) }}>
-                <TouchableHighlight onPress={this._onPressBack.bind(this)} style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
+                <TouchableOpacity onPress={this._onPressBack.bind(this)} style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
                     <Image style={{ resizeMode: "contain", height: verticalScale(30), width: "100%" }} source={back} />
-                </TouchableHighlight>
+                </TouchableOpacity>
 
                 <Text
                     style={{
@@ -53,9 +54,9 @@ export default class ReminderScreen extends Component {
                     QUÊN MẬT KHẨU{" "}
                 </Text>
 
-                <TouchableHighlight onPress={this._onPressSearch.bind(this)} style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
+                <TouchableOpacity onPress={this._onPressSearch.bind(this)} style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
                     <Image style={{ resizeMode: "contain", height: verticalScale(30), width: "100%" }} source={search} />
-                </TouchableHighlight>
+                </TouchableOpacity>
             </View>
 
 
@@ -84,9 +85,9 @@ export default class ReminderScreen extends Component {
                         <Image source={eye_off} resizeMode="cover" style={styles.backdrop} />
                     </View>
 
-                    <TouchableHighlight style={{ marginTop: verticalScale(20) }} onPress={this._onPress.bind(this)}>
+                    <TouchableOpacity style={{ marginTop: verticalScale(20) }} onPress={this._onPress.bind(this)}>
                         <Text style={styles.textlogin}>XÁC NHẬN</Text>
-                    </TouchableHighlight>
+                    </TouchableOpacity>
 
                 </View>
                 {/* </ScrollView> */}

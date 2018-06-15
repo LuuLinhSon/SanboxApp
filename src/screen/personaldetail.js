@@ -1,7 +1,11 @@
 import React, { Component } from 'react';
 import {
-    Text, View, Image, TouchableHighlight, AsyncStorage
-} from 'react-native';
+  Text,
+  View,
+  Image,
+  TouchableOpacity,
+  AsyncStorage
+} from "react-native";
 import styles from '../style/styles';
 import { textInputUserName, textInputPassword } from '../multiscreen/renderComponentOS';
 import { horizoltalscale, verticalScale, moderateScale } from "../multiscreen/formula";
@@ -13,11 +17,10 @@ export default class PersonalDetailScreen extends Component {
 
         user = require("../icons/userfb.jpg");
         lend = require("../icons/baseline_lens_black_18dp.png");
-        menu = require("../icons/baseline_menu_white_18dp.png");
-        search = require("../icons/baseline_search_white_18dp.png");
+        search = require("../icons/search.png");
         tailieunho = require("../icons/if_book_edit_35733.png");
         canhannho = require("../icons/if_system-users_15357.png");
-        back = require("../icons/baseline_keyboard_arrow_left_white_18dp.png");
+        back = require("../icons/back.png");
 
         this.state = {
             username: "",
@@ -46,7 +49,7 @@ export default class PersonalDetailScreen extends Component {
                     address: data.data.Address,
                     numberphone: data.data.Phone,
                     isLoading: false,
-                    vip: data.data.vip
+                    // vip: data.data.vip
                   });
                 });
             } else {
@@ -59,7 +62,7 @@ export default class PersonalDetailScreen extends Component {
                     email: data.data.Email,
                     address: data.data.Address,
                     numberphone: data.data.Phone,
-                    vip: data.data.vip
+                    // vip: data.data.vip
                   });
                 });
             }
@@ -69,7 +72,7 @@ export default class PersonalDetailScreen extends Component {
     }
 
     render() {
-        console.log("Chi tiết VIP" + this.state.vip);
+        // console.log("Chi tiết VIP" + this.state.vip);
         return (
             <View style={{ flex: 1 }}>
                 {this._renderViewToolBar()}
@@ -81,9 +84,9 @@ export default class PersonalDetailScreen extends Component {
     _renderViewToolBar(){
         return(
             <View style={{ flex: 1, backgroundColor: "#2196F3", flexDirection: "row", alignItems: "center", justifyContent: "center", height: verticalScale(50) }}>
-                <TouchableHighlight onPress={this._onPressBack.bind(this)} style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
+                <TouchableOpacity onPress={this._onPressBack.bind(this)} style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
                     <Image style={{ resizeMode: "contain", height: verticalScale(30), width: "100%" }} source={back} />
-                </TouchableHighlight>
+                </TouchableOpacity>
 
                 <Text
                     style={{
@@ -97,9 +100,9 @@ export default class PersonalDetailScreen extends Component {
                     THÔNG TIN TÀI KHOẢN{" "}
                 </Text>
 
-                <TouchableHighlight onPress={this._onPressSearch.bind(this)} style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
+                <TouchableOpacity onPress={this._onPressSearch.bind(this)} style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
                     <Image style={{ resizeMode: "contain", height: verticalScale(30), width: "100%" }} source={search} />
-                </TouchableHighlight>
+                </TouchableOpacity>
             </View>
         );
     }

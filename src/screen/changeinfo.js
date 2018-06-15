@@ -1,7 +1,14 @@
 import React, { Component } from 'react';
 import {
-    Text, View, Image, TouchableHighlight, Platform, TextInput, AsyncStorage, ScrollView
-} from 'react-native';
+  Text,
+  View,
+  Image,
+  TouchableOpacity,
+  Platform,
+  TextInput,
+  AsyncStorage,
+  ScrollView
+} from "react-native";
 
 
 import styles from '../style/styles';
@@ -18,10 +25,10 @@ export default class ChangeInfoScreen extends Component {
         user = require("../icons/userfb.jpg");
         lend = require("../icons/baseline_lens_black_18dp.png");
         menu = require("../icons/baseline_menu_white_18dp.png");
-        search = require("../icons/baseline_search_white_18dp.png");
+        search = require("../icons/search.png");
         tailieunho = require("../icons/if_book_edit_35733.png");
         canhannho = require("../icons/if_system-users_15357.png");
-        back = require("../icons/baseline_keyboard_arrow_left_white_18dp.png");
+        back = require("../icons/back.png");
         icon_user = require("../icons/baseline_perm_identity_black_18dp.png");
         icon_password = require("../icons/baseline_vpn_key_black_18dp.png");
         eye_on = require("../icons/baseline_visibility_black_18dp.png");
@@ -112,9 +119,9 @@ export default class ChangeInfoScreen extends Component {
     _renderViewToolBar() {
         return (
             <View style={{ flex: 1, backgroundColor: "#2196F3", flexDirection: "row", alignItems: "center", justifyContent: "center", height: verticalScale(50) }}>
-                <TouchableHighlight onPress={this._onPressBack.bind(this)} style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
+                <TouchableOpacity onPress={this._onPressBack.bind(this)} style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
                     <Image style={{ resizeMode: "contain", height: verticalScale(30), width: "100%" }} source={back} />
-                </TouchableHighlight>
+                </TouchableOpacity>
 
                 <Text
                     style={{
@@ -128,9 +135,9 @@ export default class ChangeInfoScreen extends Component {
                     THAY ĐỔI THÔNG TIN CÁ NHÂN{" "}
                 </Text>
 
-                <TouchableHighlight onPress={this._onPressSearch.bind(this)} style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
+                <TouchableOpacity onPress={this._onPressSearch.bind(this)} style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
                     <Image style={{ resizeMode: "contain", height: verticalScale(30), width: "100%" }} source={search} />
-                </TouchableHighlight>
+                </TouchableOpacity>
             </View>
         );
     }
@@ -193,11 +200,11 @@ export default class ChangeInfoScreen extends Component {
 
             </View>
             <View style={{ flex: 1, margin: moderateScale(10), justifyContent: 'flex-end', alignItems: 'center', }}>
-                <TouchableHighlight onPress={this._onPress.bind(this)} style={{ backgroundColor: '#2196F3', justifyContent: 'center', alignItems: 'center', height: verticalScale(40), borderRadius: 5, width: '100%', marginBottom: verticalScale(10) }}>
+                <TouchableOpacity onPress={this._onPress.bind(this)} style={{ backgroundColor: '#2196F3', justifyContent: 'center', alignItems: 'center', height: verticalScale(40), borderRadius: 5, width: '100%', marginBottom: verticalScale(10) }}>
                     <View>
                         <Text style={{ color: '#FFF', fontWeight: 'bold' }}>XÁC NHẬN</Text>
                     </View>
-                </TouchableHighlight>
+                </TouchableOpacity>
             </View>
         </View>;
     }
@@ -296,29 +303,15 @@ export default class ChangeInfoScreen extends Component {
                 //   RNProgressHUB.dismiss();
                   console.log("ChangeInfo" + JSON.stringify(resdata));
                 if (resdata.status === true) {
-                //     global.vip = resdata.data.vip;
-                //   try {
-                //       AsyncStorage.setItem("UserUpdate", JSON.stringify(resdata));
-                //       AsyncStorage.getItem('UserUpdate')
-                //           .then((valuestr) => JSON.parse(valuestr))
-                //           .then((data) => {
-                //               console.log("Change Info - " + data.data.UserName);
-                //               alert("Thay đổi thông tin thành công!")
-                //               navigate("Personal", { call: {name:data.data.UserName,fullname:data.data.CustName} });
-                //           });
-                    
-                //   } catch (error) {
-                //     console.log(error);
-                //   }
+                
 
                 alert("Thay đổi thông tin thành công!Vui lòng đăng nhập lại!")
-                let key = ["User", "UserUpdate", "Token","Status","Fullname"];
+                let key = ["User", "UserUpdate", "Token","Status","Fullname","Vip"];
                 AsyncStorage.multiRemove(key);
                 navigate("Auth");
                 global.isLogin = false;
                 global.fullname = "";
                 global.vip = false;
-                  
                 } else {
                   alert("Lỗi!!!Vui lòng thử lại");
                 }

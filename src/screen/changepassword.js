@@ -1,7 +1,12 @@
 import React, { Component } from 'react';
 import {
-    Text, View, Image, TouchableHighlight, AsyncStorage, ScrollView
-} from 'react-native';
+  Text,
+  View,
+  Image,
+  TouchableOpacity,
+  AsyncStorage,
+  ScrollView
+} from "react-native";
 
 import {
     textInputOldPass,
@@ -21,10 +26,10 @@ export default class ChangePasswordScreen extends Component {
         user = require("../icons/userfb.jpg");
         lend = require("../icons/baseline_lens_black_18dp.png");
         menu = require("../icons/baseline_menu_white_18dp.png");
-        search = require("../icons/baseline_search_white_18dp.png");
+        search = require("../icons/search.png");
         tailieunho = require("../icons/if_book_edit_35733.png");
         canhannho = require("../icons/if_system-users_15357.png");
-        back = require("../icons/baseline_keyboard_arrow_left_white_18dp.png");
+        back = require("../icons/back.png");
         icon_user = require("../icons/baseline_perm_identity_black_18dp.png");
         icon_password = require("../icons/baseline_vpn_key_black_18dp.png");
         eye_on = require("../icons/baseline_visibility_black_18dp.png");
@@ -66,9 +71,9 @@ export default class ChangePasswordScreen extends Component {
     _renderViewToolBar() {
         return (
             <View style={{ flex: 1, backgroundColor: "#2196F3", flexDirection: "row", alignItems: "center", justifyContent: "center", height: verticalScale(50) }}>
-                <TouchableHighlight onPress={this._onPressBack.bind(this)} style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
+                <TouchableOpacity onPress={this._onPressBack.bind(this)} style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
                     <Image style={{ resizeMode: "contain", height: verticalScale(30), width: "100%" }} source={back} />
-                </TouchableHighlight>
+                </TouchableOpacity>
 
                 <Text
                     style={{
@@ -82,9 +87,9 @@ export default class ChangePasswordScreen extends Component {
                     ĐỔI MẬT KHẨU{" "}
                 </Text>
 
-                <TouchableHighlight onPress={this._onPressSearch.bind(this)} style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
+                <TouchableOpacity onPress={this._onPressSearch.bind(this)} style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
                     <Image style={{ resizeMode: "contain", height: verticalScale(30), width: "100%" }} source={search} />
-                </TouchableHighlight>
+                </TouchableOpacity>
             </View>
         );
     }
@@ -134,11 +139,11 @@ export default class ChangePasswordScreen extends Component {
             </View>
             
                 <View style={{ flex: 1, margin: moderateScale(10), justifyContent: 'flex-end', alignItems: 'center', }}>
-                <TouchableHighlight onPress={this._onPress.bind(this)} style={{ backgroundColor: '#2196F3', justifyContent: 'center', alignItems: 'center', height: verticalScale(40), borderRadius: 5, width: '100%', marginBottom: verticalScale(10) }}>
+                <TouchableOpacity onPress={this._onPress.bind(this)} style={{ backgroundColor: '#2196F3', justifyContent: 'center', alignItems: 'center', height: verticalScale(40), borderRadius: 5, width: '100%', marginBottom: verticalScale(10) }}>
                     <View>
                         <Text style={{ color: '#FFF', fontWeight: 'bold' }}>XÁC NHẬN</Text>
                     </View>
-                 </TouchableHighlight>
+                 </TouchableOpacity>
                 </View>
             
             
@@ -175,7 +180,7 @@ export default class ChangePasswordScreen extends Component {
                 console.log("ChangePassword" + JSON.stringify(resdata));
                 if (resdata.status === true) {
                     alert("Thay đổi password thành công!");
-                    let key=["User","UserUpdate","Token","Status","Fullname"];
+                    let key=["User","UserUpdate","Token","Status","Fullname","Vip"];
                     AsyncStorage.multiRemove(key);
                     navigate("Auth");
                     global.isLogin = false;

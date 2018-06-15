@@ -7,7 +7,8 @@ import {
     TouchableHighlight,
     AsyncStorage,
     KeyboardAvoidingView,
-    ScrollView
+    ScrollView,
+    TouchableOpacity
 } from 'react-native';
 import styles from '../style/styles';
 import { textInputUserName, textInputPassword } from '../multiscreen/renderComponentOS';
@@ -24,8 +25,8 @@ export default class SignInScreen extends Component {
         clean = require("../icons/baseline_clear_black_18dp.png");
         tailieunho = require("../icons/if_book_edit_35733.png");
         canhannho = require("../icons/if_system-users_15357.png");
-        menu = require("../icons/baseline_menu_white_18dp.png");
-        search = require("../icons/baseline_search_white_18dp.png");
+        menu = require("../icons/menu.png");
+        search = require("../icons/search.png");
         this.state = {
             username: "",
             password: "",
@@ -54,19 +55,27 @@ export default class SignInScreen extends Component {
             .then(function (resdata) {
               console.log("SignIn" + JSON.stringify(resdata));
               if (resdata.status === true) {
+                
                 try {
                   // RNProgressHUB.dismiss();
                   AsyncStorage.setItem('User', JSON.stringify(resdata));
                   navigate("App");
                   global.isLogin = true;
                   global.fullname = resdata.data.CustName;
+                  global.vip = resdata.data.vip;
+                  console.log("SignIn VIP : " + resdata.data.vip);
                   AsyncStorage.setItem('Status',"yes");
                   AsyncStorage.setItem('Fullname',global.fullname);
+                  if(resdata.data.vip === true){
+                    AsyncStorage.setItem('Vip', "yes");
+                  }else{
+                    AsyncStorage.setItem("Vip", "no");
+                  }
+                  
                 } catch (error) {
                   console.log(error);
                   throw error;
                 }
-
               } else {
                 alert("Đăng nhập thất bại.Vui lòng thử lại");
               }
@@ -83,9 +92,9 @@ export default class SignInScreen extends Component {
         return <View style={{flex:1,backgroundColor:"#FFF"}}>
 
             <View style={{ flex:1,backgroundColor: "#2196F3", flexDirection: "row", alignItems: "center", justifyContent: "center", height: verticalScale(50) }}>
-                <TouchableHighlight onPress={this._onPressMenu.bind(this)} style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
+                <TouchableOpacity onPress={this._onPressMenu.bind(this)} style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
                   <Image style={{ resizeMode: "contain", height: verticalScale(30), width: "100%" }} source={menu} />
-                </TouchableHighlight>
+                </TouchableOpacity>
 
                 <Text
                   style={{
@@ -99,9 +108,9 @@ export default class SignInScreen extends Component {
                   TEST FOR SERVANTS{" "}
                 </Text>
 
-                <TouchableHighlight onPress={this._onPressSearch.bind(this)} style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
+                <TouchableOpacity onPress={this._onPressSearch.bind(this)} style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
                   <Image style={{ resizeMode: "contain", height: verticalScale(30), width: "100%" }} source={search} />
-                </TouchableHighlight>
+                </TouchableOpacity>
               </View>
 
             

@@ -4,6 +4,7 @@ import PropTypes from "prop-types";
 import ViewPager from 'react-native-viewpager';
 import styles from "../style/styles";
 import { horizoltalscale, verticalScale, moderateScale } from "../multiscreen/formula";
+import App from '../../App';
 // import RNProgressHUB from "react-native-progresshub";
 
 const ds = new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 });
@@ -19,12 +20,12 @@ export default class HomeScreen extends Component {
 
         tailieunho = require("../icons/if_book_edit_35733.png");
         canhannho = require("../icons/if_system-users_15357.png");
-        menu = require("../icons/baseline_menu_white_18dp.png");
-        search = require("../icons/baseline_search_white_18dp.png");
+        menu = require("../icons/menu.png");
+        search = require("../icons/search.png");
         user = require("../icons/userfb.jpg");
         lend = require("../icons/baseline_lens_black_18dp.png");
-        
-        
+
+                
         dataDoc = [];
         dataCate = [];
         dataSlide = [];
@@ -33,73 +34,93 @@ export default class HomeScreen extends Component {
             dataSourceCate: ds.cloneWithRows(dataCate),
             dataSourceDoc: ds.cloneWithRows(dataDoc),
             dataSourceSlide: ps.cloneWithPages(dataSlide),
-            vip:false
+            vip:false,
+            token:""
         };
-
-        
     }
 
     componentDidMount(){
-        // RNProgressHUB.showSpinIndeterminate();
-        try {
-            fetch("http://readbook.vietesoft.com/api/ApiGetData?clientKey=676e8b1b13e894b7bc65c085d120fc25&token=6372f6d26d318a17348c3a383a03623f&type=json")
-              .then(response => response.json())
-              .then(resdata => {
-                //   RNProgressHUB.dismiss();
-                if (resdata.status === true) {
-                  dataCate = resdata.data.lstCate;
-                  dataDoc = resdata.data.lstDoc;
-                  dataSlide = resdata.data.lstSlider;
-                    console.log("HOME " + JSON.stringify(dataDoc));
-                  this.setState({
-                    dataSourceCate: ds.cloneWithRows(dataCate),
-                    dataSourceDoc: ds.cloneWithRows(dataDoc),
-                    dataSourceSlide: ps.cloneWithPages(dataSlide)
-                  });
-                } else {
-                  alert("Lỗi không tải được dữ liệu");
-                }
-              });
-        } catch (error) {
-            console.log(error);
-            throw error;
-        }
+        AsyncStorage.getItem("Token")
+            .then(data => {
+                if (data !== null) {
+                    try {
+                        fetch("http://readbook.vietesoft.com/api/ApiGetData?clientKey=676e8b1b13e894b7bc65c085d120fc25&token=" +
+                            data
+                            + "&type=json")
+                            .then(response => response.json())
+                            .then(resdata => {
+                                //   RNProgressHUB.dismiss();
+                                if (resdata.status === true) {
+                                    dataCate = resdata.data.lstCate;
+                                    dataDoc = resdata.data.lstDoc;
+                                    dataSlide = resdata.data.lstSlider;
+                                    console.log("HOME " + JSON.stringify(resdata));
+                                    this.setState({
+                                        dataSourceCate: ds.cloneWithRows(dataCate),
+                                        dataSourceDoc: ds.cloneWithRows(dataDoc),
+                                        dataSourceSlide: ps.cloneWithPages(dataSlide)
+                                    });
 
-            AsyncStorage.getItem('UserUpdate')
-                .then((valuestr) => JSON.parse(valuestr))
-                .then((data) => {
-                    if (data === null) {
-                        AsyncStorage.getItem('User')
-                            .then((valuestr) => JSON.parse(valuestr))
-                            .then((data) => {
-                                this.setState({
-                                    "vip": data.data.vip
-                                });
-                                console.log("Lấy token trong Personal : " + data.token);
-                                AsyncStorage.setItem("Token", data.token);
+                                    if (global.isLogin) {
+                                        if (resdata.data.user === null) {
+                                            let key = ["User", "UserUpdate", "Token", "Status", "Fullname", "Vip"];
+                                            AsyncStorage.multiRemove(key);
+                                            global.isLogin = false;
+                                            global.fullname = "";
+                                            global.vip = false;
+                                            alert("Hết phiên làm việc,vui lòng đăng nhập lại");  
+                                        }
+                                    }
+                                } else {
+                                    alert("Lỗi không tải được dữ liệu");
+                                }
                             });
-
-                    } else {
-                        AsyncStorage.getItem('UserUpdate')
-                            .then((valuestr) => JSON.parse(valuestr))
-                            .then((data) => {
-                                this.setState({
-                                    "vip": data.data.vip
-                                });
-                            });
+                    } catch (error) {
+                        console.log(error);
+                        throw error;
                     }
-                }); 
-        
+                }else{
+                    try {
+                      fetch("http://readbook.vietesoft.com/api/ApiGetData?clientKey=676e8b1b13e894b7bc65c085d120fc25&token=&type=json")
+                        .then(response => response.json())
+                        .then(resdata => {
+                          //   RNProgressHUB.dismiss();
+                          if (resdata.status === true) {
+                            dataCate = resdata.data.lstCate;
+                            dataDoc = resdata.data.lstDoc;
+                            dataSlide = resdata.data.lstSlider;
+                            console.log("HOME " + JSON.stringify(resdata));
+                            this.setState({
+                              dataSourceCate: ds.cloneWithRows(
+                                dataCate
+                              ),
+                              dataSourceDoc: ds.cloneWithRows(
+                                dataDoc
+                              ),
+                              dataSourceSlide: ps.cloneWithPages(
+                                dataSlide
+                              )
+                            });
 
-        
+                          } else {
+                            alert("Lỗi không tải được dữ liệu");
+                          }
+                        });
+                    } catch (error) {
+                      console.log(error);
+                      throw error;
+                    }
+                }
+            });
     }
 
     render() {
+        console.log("Home VIP : " + global.vip);
         return <View style={{ flex: 1, backgroundColor: "#E0E0E0" }}>
             <View style={{ flex: 1, backgroundColor: "#2196F3", flexDirection: "row", alignItems: "center", justifyContent: "center", height: verticalScale(50) }}>
-                <TouchableHighlight onPress={this._onPressMenu.bind(this)} style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
+                <TouchableOpacity onPress={this._onPressMenu.bind(this)} style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
                     <Image style={{ resizeMode: "contain", height: verticalScale(30), width: "100%" }} source={menu} />
-                </TouchableHighlight>
+                </TouchableOpacity>
 
                 <Text
                     style={{
@@ -113,9 +134,9 @@ export default class HomeScreen extends Component {
                     TEST FOR SERVANTS{" "}
                 </Text>
 
-                <TouchableHighlight onPress={this._onPressSearch.bind(this)} style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
+                <TouchableOpacity onPress={this._onPressSearch.bind(this)} style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
                     <Image style={{ resizeMode: "contain", height: verticalScale(30), width: "100%" }} source={search} />
-                </TouchableHighlight>
+                </TouchableOpacity>
             </View>
 
             <View style={{ flex: 13 }}>
@@ -146,15 +167,6 @@ export default class HomeScreen extends Component {
                         renderRow={this._renderRow.bind(this)}
                         enableEmptySections={true}
                         style={{margin:moderateScale(3)}}
-                        renderSeparator={(sectionID, rowID, adjacentRowHighlighted) => {
-                            return (
-                                <View
-                                    key={sectionID + " - " + rowID}
-                                    style={{ width: horizoltalscale(3), height: "100%", backgroundColor: "#CCC" }}>
-                                </View>
-                            );
-                        }}
-
                          />
                 </View>
 
@@ -181,28 +193,29 @@ export default class HomeScreen extends Component {
 
     _renderRow(datasource) {
         return <TouchableOpacity onPress={() => {
+            // this._onPressRenderRow.bind(this);
               if ((datasource.Fee === true) && (global.vip === true)) {
                 this.props.navigation.navigate("Detail", {
-                  calldoc: datasource.ID
+                    calldoc: { id: datasource.ID, title: datasource.Title}
                 });
                 console.log("1");
               } else if(datasource.Fee === false){
                   this.props.navigation.navigate("Detail", {
-                      calldoc: datasource.ID
+                      calldoc: { id: datasource.ID, title: datasource.Title }
                   });
                   console.log("2");
               }else{
                   alert("Bạn cần tài khoản VIP để xem tài liệu này!");
               }
-            }} style={{ borderRadius:5,flex: 1, justifyContent: "center", alignItems: "center", height: verticalScale(90), width: horizoltalscale(200) }}>
-            <View style={{ borderRadius:5, flexDirection: "row", height: verticalScale(90), width: horizoltalscale(200), backgroundColor: "#FFF", margin: moderateScale(3), justifyContent: "center", alignSelf: "flex-start",padding:moderateScale(2) }}>
+            }} style={{flex: 1, justifyContent: "center", alignItems: "center", height: verticalScale(90), width: horizoltalscale(200) }}>
+            <View style={{flexDirection: "row", height: verticalScale(90), width: horizoltalscale(200), backgroundColor: "#FFF", margin: moderateScale(5), justifyContent: "center", alignSelf: "flex-start",padding:moderateScale(5) }}>
               <Image style={{ resizeMode: "contain", height: verticalScale(80), width: horizoltalscale(80), flex: 1 }} source={{ uri: datasource.Photo }} />
               <Text
                 style={{
                   flex: 1,
                   fontWeight: "bold",
-                  margin: moderateScale(2),
                   textAlignVertical:'top',
+                  fontSize: moderateScale(12)
                 }}
               >
                 {datasource.Title}
@@ -216,7 +229,7 @@ export default class HomeScreen extends Component {
             <TouchableOpacity onPress={()=>this.props.navigation.navigate("List",{call:datasource.ID})} style={{justifyContent: 'center', alignItems: 'center', height: verticalScale(150) }}>
                 <View style={{ flexDirection: 'column', height: verticalScale(140), width: horizoltalscale(130), backgroundColor: '#FFF', margin: moderateScale(3) }}>
                   <Image style={{ height: verticalScale(110), width: horizoltalscale(130), flex: 5,resizeMode:'contain' }} source={{ uri: datasource.Photo }} />
-                  <Text style={{ flex: 2, fontWeight: 'bold', margin: moderateScale(2),textAlign:'center' }}>{datasource.Name}</Text>
+                  <Text style={{ flex: 2, fontWeight: 'bold', margin: moderateScale(2),textAlign:'center',fontSize:moderateScale(12) }}>{datasource.Name}</Text>
                 </View>
             </TouchableOpacity>
         );
@@ -242,6 +255,10 @@ export default class HomeScreen extends Component {
         const { navigate } = this.props.navigation;
         navigate("Search");
     };
+
+    // _onPressRenderRow(){
+        
+    // };
 
 
 }

@@ -6,7 +6,8 @@ import {
   TextInput,
   TouchableHighlight,
   AsyncStorage,
-  ScrollView
+  ScrollView,
+  TouchableOpacity
 } from "react-native";
 import styles from '../style/styles';
 import {
@@ -85,8 +86,14 @@ export default class SignUpScreen extends Component {
                             navigate("App");
                             global.isLogin = true;
                             global.fullname = resdata.data.CustName;
+                            global.vip = resdata.data.vip;
                             AsyncStorage.setItem('Status', "yes");
                             AsyncStorage.setItem('Fullname', global.fullname);
+                            if (resdata.data.vip === true) {
+                                AsyncStorage.setItem('Vip', "yes");
+                            } else {
+                                AsyncStorage.setItem("Vip", "no");
+                            }
                         } catch (error) {
                             console.log(error);
                             throw error;
@@ -107,9 +114,9 @@ export default class SignUpScreen extends Component {
         return <View style={{ flex: 1, backgroundColor: "#FFF" }}>
 
             <View style={{ flex: 1, backgroundColor: "#2196F3", flexDirection: "row", alignItems: "center", justifyContent: "center", height: verticalScale(50) }}>
-                <TouchableHighlight onPress={this._onPressBack.bind(this)} style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
+                <TouchableOpacity onPress={this._onPressBack.bind(this)} style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
                     <Image style={{ resizeMode: "contain", height: verticalScale(30), width: "100%" }} source={back} />
-                </TouchableHighlight>
+                </TouchableOpacity>
 
                 <Text
                     style={{
@@ -123,9 +130,9 @@ export default class SignUpScreen extends Component {
                     TEST FOR SERVANTS{" "}
                 </Text>
 
-                <TouchableHighlight onPress={this._onPressSearch.bind(this)} style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
+                <TouchableOpacity onPress={this._onPressSearch.bind(this)} style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
                     <Image style={{ resizeMode: "contain", height: verticalScale(30), width: "100%" }} source={search} />
-                </TouchableHighlight>
+                </TouchableOpacity>
             </View>
 
             <View style={{
@@ -177,9 +184,9 @@ export default class SignUpScreen extends Component {
                         <Image source={clean} resizeMode="cover" style={styles.backdrop} />
                     </View>
 
-                    <TouchableHighlight style={{ marginTop: verticalScale(20)  }} onPress={this._onPress.bind(this)}>
+                    <TouchableOpacity style={{ marginTop: verticalScale(20)  }} onPress={this._onPress.bind(this)}>
                         <Text style={styles.textlogin}>Đăng ký</Text>
-                    </TouchableHighlight>
+                    </TouchableOpacity>
 
                 </View>
                 {/* </ScrollView> */}
