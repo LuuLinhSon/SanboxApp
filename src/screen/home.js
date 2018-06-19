@@ -5,7 +5,7 @@ import ViewPager from 'react-native-viewpager';
 import styles from "../style/styles";
 import { horizoltalscale, verticalScale, moderateScale } from "../multiscreen/formula";
 import App from '../../App';
-// import RNProgressHUB from "react-native-progresshub";
+
 
 const ds = new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 });
 const ps = new ViewPager.DataSource({
@@ -40,6 +40,7 @@ export default class HomeScreen extends Component {
     }
 
     componentDidMount(){
+        
         AsyncStorage.getItem("Token")
             .then(data => {
                 if (data !== null) {
@@ -86,6 +87,7 @@ export default class HomeScreen extends Component {
                         .then(resdata => {
                           //   RNProgressHUB.dismiss();
                           if (resdata.status === true) {
+                            
                             dataCate = resdata.data.lstCate;
                             dataDoc = resdata.data.lstDoc;
                             dataSlide = resdata.data.lstSlider;

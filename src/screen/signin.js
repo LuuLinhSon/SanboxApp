@@ -20,8 +20,8 @@ export default class SignInScreen extends Component {
         super(props);
         icon_user = require("../icons/baseline_perm_identity_black_18dp.png");
         icon_password = require("../icons/baseline_vpn_key_black_18dp.png");
-        eye_on = require("../icons/baseline_visibility_black_18dp.png");
-        eye_off = require("../icons/baseline_visibility_off_black_18dp.png");
+        eye_on = require("../icons/eye.png");
+        eye_off = require("../icons/no_eye.png");
         clean = require("../icons/baseline_clear_black_18dp.png");
         tailieunho = require("../icons/if_book_edit_35733.png");
         canhannho = require("../icons/if_system-users_15357.png");
@@ -30,6 +30,7 @@ export default class SignInScreen extends Component {
         this.state = {
             username: "",
             password: "",
+            hidePassword:true
         }
     }
 
@@ -130,14 +131,39 @@ export default class SignInScreen extends Component {
                   <Image source={icon_user} resizeMode="cover" style={styles.backdrop} />
                   <View style={styles.line} />
                   {textInputUserName(this)}
-                  <Image source={clean} resizeMode="cover" style={styles.backdrop} />
+                  <TouchableOpacity onPress={this._onPressClearName.bind(this)} style={styles.backdrop}>
+                     <Image source={clean} resizeMode="cover" style={styles.backdrop} />
+                  </TouchableOpacity>
                 </View>
 
                 <View style={styles.row}>
                   <Image source={icon_password} resizeMode="cover" style={styles.backdrop} />
                   <View style={styles.line} />
                   {textInputPassword(this)}
-                  <Image source={eye_off} resizeMode="cover" style={styles.backdrop} />
+                  <TouchableOpacity onPress={this._onPressHidePass.bind(this)} style={styles.backdrop}>
+                  {this.state.hidePassword? ( 
+                    <Image source={eye_off} resizeMode="cover" style={{
+                      flex: 30,
+                      flexDirection: "column",
+                      justifyContent: "center",
+                      alignItems: "center",
+                      resizeMode: "contain",
+                      height: verticalScale(20),
+                      width: horizoltalscale(20)
+                    }} />
+                  ):(
+                      <Image source={eye_on} resizeMode="cover" style={{
+                        flex: 30,
+                        flexDirection: "column",
+                        justifyContent: "center",
+                        alignItems: "center",
+                        resizeMode: "contain",
+                        height: verticalScale(20),
+                        width: horizoltalscale(20)
+                      }} />
+                  )}
+                  
+                  </TouchableOpacity>
                 </View>
 
                 <TouchableHighlight style={{ marginTop: verticalScale(20) }} onPress={this._onPress.bind(this)}>
@@ -176,6 +202,16 @@ export default class SignInScreen extends Component {
     _onPressSearch(){
       const { navigate } = this.props.navigation;
         navigate("Search");
+    }
+
+    _onPressClearName(){
+      this.textInput.clear();
+    }
+
+    _onPressHidePass(){
+      this.setState({
+         hidePassword:!this.state.hidePassword
+      });
     }
 
     

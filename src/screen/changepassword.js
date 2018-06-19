@@ -116,21 +116,24 @@ export default class ChangePasswordScreen extends Component {
                         <Image source={icon_user} resizeMode="cover" style={styles.backdrop} />
                         <View style={styles.line} />
                         {textInputOldPass(this)}
-                        <Image source={eye_off} resizeMode="cover" style={styles.backdrop} />
+                        <View style={styles.backdrop}>
+                        </View>
                     </View>
 
                     <View style={styles.row}>
                         <Image source={info} resizeMode="cover" style={styles.backdrop} />
                         <View style={styles.line} />
                         {textInputNewPass(this)}
-                        <Image source={eye_off} resizeMode="cover" style={styles.backdrop} />
+                        <View style={styles.backdrop}>
+                        </View>
                     </View>
 
                     <View style={styles.row}>
                         <Image source={emails} resizeMode="cover" style={styles.backdrop} />
                         <View style={styles.line} />
                         {textInputConfirmNewPass(this)}
-                        <Image source={eye_off} resizeMode="cover" style={styles.backdrop} />
+                        <View style={styles.backdrop}>
+                        </View>
                     </View>
 
                 </View>

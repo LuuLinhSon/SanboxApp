@@ -12,12 +12,14 @@ import {
 
 export function textInputUserName(This) {
     if (Platform.OS === "android") {
-        return <TextInput onChangeText={(value) => This.setState({ username: value })} 
+        return <TextInput 
+        onChangeText={(value) => This.setState({ username: value })} 
         style={styles.textinput} 
         placeholder="Tên đăng nhập" 
         placeholderTextColor="#000000" 
         underlineColorAndroid="transparent" 
         numberOfLines={1}
+        ref={input => { This.textInput = input }}
         />;
     } else {
         return <TextInput onChangeText={value => This.setState({
@@ -26,11 +28,13 @@ export function textInputUserName(This) {
     }
 }
 
+
 export function textInputPassword(This) {
     if (Platform.OS === "android") {
         return <TextInput 
         onChangeText={(value) => This.setState({ password: value })} 
-        style={styles.textinput} secureTextEntry={true} 
+        style={styles.textinput} 
+        secureTextEntry={This.state.hidePassword} 
         placeholder="Mật khẩu" placeholderTextColor="#000000" 
         underlineColorAndroid="transparent" 
         numberOfLines={1}
@@ -68,6 +72,7 @@ export function textInputEmail(This) {
         placeholderTextColor="#000000" 
         underlineColorAndroid="transparent" 
         numberOfLines={1}
+        ref={input => { This.textInput = input }}
         />;
     } else {
         return <TextInput onChangeText={value => This.setState({

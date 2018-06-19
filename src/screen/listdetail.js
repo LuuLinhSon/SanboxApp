@@ -153,9 +153,9 @@ export default class ListDetailScreen extends Component {
 
               <View style={{flex:5,marginLeft:horizoltalscale(5)}}>
                     <Text style={{
-                            flex: 1,
+                            flex: 2,
                             fontWeight: "bold",
-                            fontSize:16,
+                            fontSize: moderateScale(14),
                             color:'#000',
                             margin: moderateScale(2)}}>
                         {datasource.Title}

@@ -9,7 +9,7 @@ import {
   TouchableOpacity
 } from "react-native";
 import styles from '../style/styles';
-import { textInputUserName, textInputPassword,textInputEmail } from '../multiscreen/renderComponentOS';
+import { textInputUserName, textInputPassword,textInputEmail, textInputUserNameReminder } from '../multiscreen/renderComponentOS';
 import { horizoltalscale, verticalScale, moderateScale } from "../multiscreen/formula";
 // import RNProgressHUB from "react-native-progresshub";
 
@@ -75,14 +75,16 @@ export default class ReminderScreen extends Component {
                         <Image source={icon_user} resizeMode="cover" style={styles.backdrop} />
                         <View style={styles.line} />
                         {textInputUserName(this)}
-                        <Image source={clean} resizeMode="cover" style={styles.backdrop} />
+                        <View style={styles.backdrop}>
+                        </View>
                     </View>
 
                     <View style={styles.row}>
-                        <Image source={emails} resizeMode="cover" style={styles.backdrop} />
+                        <Image source={emails} resizeMode="cover" style={styles.backdrop}/>
                         <View style={styles.line} />
                         {textInputEmail(this)}
-                        <Image source={eye_off} resizeMode="cover" style={styles.backdrop} />
+                        <View style={styles.backdrop}>
+                        </View>
                     </View>
 
                     <TouchableOpacity style={{ marginTop: verticalScale(20) }} onPress={this._onPress.bind(this)}>
@@ -136,6 +138,14 @@ export default class ReminderScreen extends Component {
     _onPressSearch(){
         const { navigate } = this.props.navigation;
         navigate("Search");
+    }
+    
+    _onPressClearNameReminder(){
+        this.textInput.clear();
+    }
+
+    _onPressClearEmail(){
+        this.textInput.clear();
     }
 
 }

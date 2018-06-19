@@ -164,35 +164,40 @@ export default class ChangeInfoScreen extends Component {
                         <Image source={icon_user} resizeMode="cover" style={styles.backdrop} />
                         <View style={styles.line} />
                         {this._textInputUserName()}
-                        <Image source={clean} resizeMode="cover" style={styles.backdrop} />
+                        <View style={styles.backdrop}>
+                        </View>
                     </View>
 
                     <View style={styles.row}>
                         <Image source={info} resizeMode="cover" style={styles.backdrop} />
                         <View style={styles.line} />
                         {this._textInputFullName()}
-                        <Image source={clean} resizeMode="cover" style={styles.backdrop} />
+                        <View style={styles.backdrop}>
+                        </View>
                     </View>
 
                     <View style={styles.row}>
                         <Image source={emails} resizeMode="cover" style={styles.backdrop} />
                         <View style={styles.line} />
                         {this._textInputEmail()}
-                        <Image source={clean} resizeMode="cover" style={styles.backdrop} />
+                        <View style={styles.backdrop}>
+                        </View>
                     </View>
 
                     <View style={styles.row}>
                         <Image source={city} resizeMode="cover" style={styles.backdrop} />
                         <View style={styles.line} />
                         {this._textInputAddress()}
-                        <Image source={clean} resizeMode="cover" style={styles.backdrop} />
+                        <View style={styles.backdrop}>
+                        </View>
                     </View>
 
                     <View style={styles.row}>
                         <Image source={call} resizeMode="cover" style={styles.backdrop} />
                         <View style={styles.line} />
                         {this._textInputPhone()}
-                        <Image source={clean} resizeMode="cover" style={styles.backdrop} />
+                        <View style={styles.backdrop}>
+                        </View>
                     </View>
 
                 </View>
